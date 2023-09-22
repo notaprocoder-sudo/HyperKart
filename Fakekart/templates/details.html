@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+    {{ detail.desc|truncatewords:155 }}
+
+
+{% endblock %}
+
+{% block title %}
+HyperKart Online Store - {{detail.name}}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="path">
+        <p><a href="{% url 'Fakekartapp:AllProdCat' %}">Home</a> | <a href="{{detail.category.get_url}}">{{detail.category}}</a> | {{detail.name}}  </p>
+    </div>
+
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div style="min-width: 18rem;">
+            <img src="{{detail.image.url}}" alt="{{detail.name}}" width="300px" height="280px">
+        </div>
+    </div>
+    <div>
+        <div class="col-md-12 col-sm-12 col-md-12 col-lg-12">
+            <h1 class="my_prod_title">{{detail.name}}</h1>
+            <p class="my_prod_price">Rs.{{detail.price}}*</p>
+            <h3 class="my_prod_text">Details:</h3>
+            <p class="text-justify my_prod_text">{{detail.desc}}</p>
+            {% if detail.stock <= 0 %}
+            <p class="text-justify my_prod_text">Out of stock.</p>
+            {% else %}
+            
+            <a href="{% url 'cart:add_to_cart' detail.id %}" class="btn btn-secondary">Add to HyperKart</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+

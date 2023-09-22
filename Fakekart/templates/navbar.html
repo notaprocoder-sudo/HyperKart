@@ -1,0 +1,36 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{%url 'Fakekartapp:AllProdCat' %}"><img src="{% static 'img/default.png' %}" alt="logoimage" width="30px" height="30px"> <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown {% if 'Fakekartapp' in request.path %} active {% endif %}">
+        <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Shop
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{%url 'Fakekartapp:AllProdCat' %}">All Products A-Z</a>
+          <div class="dropdown-divider"></div>
+          {% for name in links %}
+          <a class="dropdown-item" href="{{name.get_url}}">{{name.name}}</a>
+          {% endfor %}
+        </div>
+      </li>
+      {% if itemcount > 0 %}
+      <li class="nav-item">
+        <a class="nav-link font-weight-bold" href="{% url 'cart:cart_detail' %}"><i class="fa fa-shopping-cart" ></i>({{itemcount}})</a>
+      </li>
+      {% endif %}
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action=" {% url 'search_app:search_result' %}" method="get">
+      {% csrf_token %}
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q"aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search" ></i></button>
+    </form>
+  </div>
+</nav>
